@@ -20,7 +20,7 @@ A personal portfolio website for **Deepak Keshav Warude**, a Computer Engineerin
 - **Next.js 16** (App Router, Turbopack, React 19)
 - **TypeScript**
 - **Tailwind CSS v4** (CSS-based `@theme`, no `tailwind.config.js`)
-- **shadcn/ui**, but on the newer **Base UI** primitives (`@base-ui/react`), not Radix — see gotchas below
+- **shadcn/ui**, but on the newer **Base UI** primitives (`@base-ui/react`), not Radix — see gotchas below. The `shadcn` CLI package itself lives in `devDependencies` (it's a codegen tool run via `npx shadcn add ...`, never imported by app code) — don't move it back to `dependencies`.
 - **Framer Motion v14** for all animation/scroll effects
 - **next-themes** for dark/light toggle (dark is the default theme)
 - **lucide-react** for icons, with two hand-rolled SVG icons for GitHub/LinkedIn (see gotchas)
@@ -83,6 +83,18 @@ To add/edit/remove a project, work experience entry, skill, achievement, etc., *
 
 7. **shadcn/ui's dark theme here uses an accent blue** (`oklch(0.623 0.214 259.815)` dark / `oklch(0.546 0.245 262.881)` light, roughly Tailwind's blue-500/600) layered onto an otherwise grayscale OKLCH palette in `src/app/globals.css`. If re-theming, change `--primary`/`--ring` in both `:root` and `.dark` blocks together.
 
+8. **A `mailto:` link alone is not a reliable "contact me" affordance.** If the visitor has no default mail client configured (common on Chrome/Windows), clicking it does nothing visible and looks like a broken icon — this happened for real and was reported as a bug. Fix: `src/components/email-link.tsx` (`EmailLink`) wraps every email `<a>` so a click also copies the address to the clipboard and shows a brief "Email copied!" tooltip via Framer Motion, in addition to letting the `mailto:` navigation fire normally. All three email touchpoints (`hero.tsx` icon, `contact.tsx` CTA, `contact.tsx` footer link) use this component — don't revert them to plain `<a href="mailto:...">`.
+
+## Security
+
+A security review (headers + dependency + secret-scan) was done on this repo; see commit `b22ef0f`. Current state:
+
+- **HTTP security headers** are set in `next.config.ts` via `headers()`: `Content-Security-Policy`, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, and an explicit `Strict-Transport-Security` (Vercel also sets HSTS by default on its own, so this is redundant-but-harmless belt-and-suspenders). The CSP uses `script-src 'self' 'unsafe-inline'` and `style-src 'self' 'unsafe-inline'` deliberately — `next-themes` injects an inline bootstrap `<script>` to avoid a dark/light flash on load, and Framer Motion sets animated values via inline `style` attributes; both would be blocked by a stricter nonce-based CSP without extra wiring that wasn't judged worth it for a static site with zero user-generated content. The CSP still blocks all *remote* script/frame/object sources, which is the main realistic threat for this app. **If this CSP is ever tightened, re-run the same kind of check that validated it**: load the production build, click the theme toggle, and confirm zero console/CSP-violation errors — don't just assume it still works.
+- **`npm audit` reports ~19 vulnerabilities, all in dev-only tooling** (the `shadcn` CLI and the ESLint/`typescript-eslint` toolchain, via `deepmerge` and `minimatch` advisories). None of this code ships to the browser or runs on Vercel's serving infrastructure — it only executes locally during `npm run lint` or `npx shadcn add`. **Do not run `npm audit fix --force`** — it downgrades `eslint` to v4 (years-old, breaking, incompatible with this project's flat config) for no real risk reduction. Revisit when `shadcn`/`eslint-config-next`/`typescript-eslint` ship fixed majors upstream.
+- No secrets, tokens, or keys exist anywhere in git history or the working tree (checked via full-history grep). No `dangerouslySetInnerHTML`/`eval`/`new Function` in the codebase. Every `target="_blank"` link carries `rel="noreferrer"`.
+- The app has **zero environment variables and no backend** — nothing to leak via Vercel project settings.
+- Not checked from this environment (needs repo-owner auth): whether GitHub's Dependabot/secret-scanning are enabled under Settings → Security on the GitHub repo. Worth a quick manual check periodically; it's a free toggle for public repos.
+
 ## Deployment
 
 - Vercel project is linked to the GitHub repo's `main` branch — **just `git push origin main` and it auto-deploys**, no manual `vercel` CLI step needed for routine changes.
@@ -92,7 +104,7 @@ To add/edit/remove a project, work experience entry, skill, achievement, etc., *
 ## Open items / things a future session might need to follow up on
 
 - **`SmartHeal`'s GitHub repo is unlinked.** The owner mentioned `https://github.com/Runverve-tech/SH-App` for it, but that URL 404s publicly (likely a private company repo). The SmartHeal project card currently has no "Code" link and carries an "NDA Signed" badge instead (same for Rakshak HRMS, which is genuinely NDA'd). If this repo is ever made public, add `github: "https://github.com/Runverve-tech/SH-App"` to the `smartheal` entry in `data.ts`.
-- **GitHub's "Contributors" sidebar widget** on the repo's main page briefly showed a stale "claude" entry after an early commit (made with AI co-author attribution) was amended and force-pushed to remove it. Verified repeatedly that the actual git history, every commit's author/committer, and the authoritative Insights → Contributors page show only `dkwarude-cell` — this was purely a GitHub-side stats cache lag, not a real data issue, and it resolved on its own. If something similar ever recurs, don't force-push again without the owner's explicit sign-off (it's a destructive operation); check the Insights → Contributors page first since it's more authoritative than the sidebar widget.
+- **GitHub's "Contributors" sidebar widget** on the repo's main page briefly showed a stale "claude" entry after an early commit (made with AI co-author attribution) was amended and force-pushed to remove it. Verified repeatedly that the actual git history, every commit's author/committer, and the authoritative Insights → Contributors page show only `dkwarude-cell` — this was purely a GitHub-side stats cache lag, not a real data issue, and it resolved on its own (the Insights → Contributors page corrected first, the sidebar widget caught up shortly after). **This is resolved** — flagged here only so a future session doesn't panic and force-push again if some other stale-cache artifact ever reappears; check the Insights → Contributors page first since it's more authoritative than the sidebar widget, and don't force-push without the owner's explicit sign-off (it's a destructive operation).
 - No automated tests exist for this project (not requested, and a marketing/portfolio site has limited test surface). `npm run build` + `npm run lint` + manual QA (and, where feasible, a quick Playwright screenshot pass on mobile viewport) is the verification loop used throughout.
 
 ## How this project was actually built (brief narrative, for context)
@@ -101,3 +113,4 @@ To add/edit/remove a project, work experience entry, skill, achievement, etc., *
 2. Scaffolded with `create-next-app`, added shadcn/ui + Framer Motion, built out all sections from the owner's resume content.
 3. Deployed to Vercel via CLI (token-based, one-time), linked to GitHub for auto-deploy thereafter.
 4. Iterative refinement driven entirely by the owner's feedback: fixed a broken resume download (regenerated the PDF from scratch since only extracted text, not the original file, was ever available), wired in the real LinkedIn URL, added/reordered/relinked projects, added NDA badges, added achievement photos (with photo-cropping iterations), added "advanced/futuristic" scroll motion UI, then fixed that motion UI's mobile experience (including the Framer Motion blur bug above) and added a touch-appropriate tap-glow interaction, and iterated on the hero tagline wording several times.
+5. A full security review (HTTP headers, dependency audit, secret scan — see "Security" above) and a fix for email links silently failing when no mail client is configured (see gotcha 8 above), both done on request after the site was otherwise feature-complete.
