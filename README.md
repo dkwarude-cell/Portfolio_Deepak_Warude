@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Deepak Keshav Warude — Portfolio
 
-## Getting Started
+Personal portfolio site for Deepak Keshav Warude, a Computer Engineering student building AI/ML-powered software — from a healthcare platform used by 500+ people to an offline HRMS deployed with the 14 Jat Regiment of the Indian Army.
 
-First, run the development server:
+**Live site:** _add your Vercel URL here after deploying_
+
+## Tech stack
+
+- [Next.js 16](https://nextjs.org/) (App Router, Turbopack)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS v4](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/) (Base UI primitives)
+- [Framer Motion](https://www.framer.com/motion/) for restrained, reduced-motion-aware animation
+- [next-themes](https://github.com/pacocoursey/next-themes) for the dark/light toggle (dark by default)
+
+## Features
+
+- Single-page, section-based layout: About, Experience, Projects, Skills, Education, Achievements, Contact
+- Sticky header with scroll-spy navigation and a resume download button
+- Project case studies with stack, period, and outcome-focused highlights
+- Dark-mode-first design tuned for contrast and readability (no pure black/white)
+- Fully responsive, keyboard-accessible, and respects `prefers-reduced-motion`
+- Content lives in a single typed file ([`src/lib/data.ts`](src/lib/data.ts)) for easy updates — no need to touch components to add a new project or role
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Updating content
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+All personal content (bio, experience, projects, skills, education, achievements, links) lives in [`src/lib/data.ts`](src/lib/data.ts). Edit that file to update the site — no component changes needed for routine updates.
 
-## Learn More
+The resume PDF is served from [`public/resume.pdf`](public/resume.pdf); replace that file to update the downloadable resume.
 
-To learn more about Next.js, take a look at the following resources:
+## Build & deploy
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run build
+npm run start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Deployed on [Vercel](https://vercel.com/) — pushes to `main` auto-deploy.
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Personal project — all rights reserved.
