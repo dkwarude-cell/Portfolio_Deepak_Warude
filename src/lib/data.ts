@@ -7,7 +7,7 @@ export const profile = {
   status: "Open to opportunities",
   email: "deepakwarude009@gmail.com",
   github: "https://github.com/dkwarude-cell",
-  linkedin: "#",
+  linkedin: "https://www.linkedin.com/in/deepak-warude-621592394",
   resumeUrl: "/resume.pdf",
   bio: "I'm a Computer Engineering student who builds AI/ML-powered software that actually ships — from a 500-user healthcare platform to an offline HRMS currently deployed with an Indian Army regiment. I care most about turning research-grade ideas into systems real people depend on, backed by clean, scalable architecture.",
   avatar: "/images/profile.jpg",
