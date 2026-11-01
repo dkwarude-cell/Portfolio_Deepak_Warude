@@ -22,6 +22,8 @@ export function TiltCard({
   const ref = React.useRef<HTMLDivElement>(null);
   const px = useMotionValue(0.5);
   const py = useMotionValue(0.5);
+  const [tapActive, setTapActive] = React.useState(false);
+  const tapTimeout = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const spring = { stiffness: 220, damping: 22, mass: 0.4 };
   const rotateX = useSpring(useTransform(py, [0, 1], [7, -7]), spring);
@@ -42,8 +44,36 @@ export function TiltCard({
     py.set(0.5);
   }
 
+  function onTouchStart(e: React.TouchEvent<HTMLDivElement>) {
+    const rect = ref.current?.getBoundingClientRect();
+    const touch = e.touches[0];
+    if (!rect || !touch) return;
+    px.set((touch.clientX - rect.left) / rect.width);
+    py.set((touch.clientY - rect.top) / rect.height);
+    setTapActive(true);
+    clearTimeout(tapTimeout.current);
+    tapTimeout.current = setTimeout(() => setTapActive(false), 700);
+  }
+
+  React.useEffect(() => () => clearTimeout(tapTimeout.current), []);
+
   if (isCoarse) {
-    return <div className={cn("relative", className)}>{children}</div>;
+    return (
+      <div
+        ref={ref}
+        onTouchStart={onTouchStart}
+        className={cn("relative transition-transform duration-150 active:scale-[0.98]", className)}
+      >
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute -inset-px rounded-xl"
+          style={{ background }}
+          animate={{ opacity: tapActive ? 1 : 0 }}
+          transition={{ duration: tapActive ? 0.15 : 0.5 }}
+        />
+        {children}
+      </div>
+    );
   }
 
   return (
