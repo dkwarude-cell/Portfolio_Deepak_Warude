@@ -3,6 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { Download, Menu, X } from "lucide-react";
+import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { nav, profile } from "@/lib/data";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -11,6 +12,11 @@ import { Button } from "@/components/ui/button";
 export function SiteHeader() {
   const [activeHash, setActiveHash] = React.useState<string>("");
   const [open, setOpen] = React.useState(false);
+
+  const { scrollY } = useScroll();
+  const headerHeight = useTransform(scrollY, [0, 100], [64, 56]);
+  const borderPct = useTransform(scrollY, [0, 100], [0, 60]);
+  const borderColor = useMotionTemplate`color-mix(in oklch, var(--primary) ${borderPct}%, var(--border))`;
 
   React.useEffect(() => {
     const sections = nav
@@ -33,8 +39,14 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-6">
+    <motion.header
+      style={{ borderBottomColor: borderColor }}
+      className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+    >
+      <motion.div
+        style={{ height: headerHeight }}
+        className="mx-auto flex w-full max-w-5xl items-center justify-between px-6"
+      >
         <Link href="#top" className="font-mono text-sm font-medium">
           DW<span className="text-primary">.</span>
         </Link>
@@ -79,7 +91,7 @@ export function SiteHeader() {
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
           </Button>
         </div>
-      </div>
+      </motion.div>
 
       {open && (
         <nav className="flex flex-col gap-1 border-t border-border/60 px-6 py-4 md:hidden">
@@ -103,6 +115,6 @@ export function SiteHeader() {
           </a>
         </nav>
       )}
-    </header>
+    </motion.header>
   );
 }
