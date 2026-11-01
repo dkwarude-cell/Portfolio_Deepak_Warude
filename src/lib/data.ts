@@ -2,7 +2,7 @@ export const profile = {
   name: "Deepak Keshav Warude",
   shortName: "Deepak Warude",
   role: "Computer Engineering Student",
-  tagline: "Computer Engineer building products from idea to deployment.",
+  tagline: "I'm someone who builds products from idea to deployment.",
   location: "Nashik, India",
   status: "Open to opportunities",
   email: "deepakwarude009@gmail.com",
