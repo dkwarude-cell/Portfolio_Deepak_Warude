@@ -1,6 +1,7 @@
 import { ArrowUpRight, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
 import { Container } from "@/components/container";
+import { EmailLink } from "@/components/email-link";
 import { FadeIn } from "@/components/fade-in";
 import { profile } from "@/lib/data";
 
@@ -18,13 +19,13 @@ export function Contact() {
             me is email.
           </p>
 
-          <a
-            href={`mailto:${profile.email}`}
+          <EmailLink
+            email={profile.email}
             className="mt-8 inline-flex items-center gap-2 text-xl font-medium text-foreground underline decoration-primary/40 underline-offset-8 transition-colors hover:text-primary sm:text-2xl"
           >
             {profile.email}
             <ArrowUpRight className="size-5" />
-          </a>
+          </EmailLink>
 
           <div className="mt-10 flex items-center justify-center gap-6">
             <a
@@ -43,12 +44,12 @@ export function Contact() {
             >
               <LinkedinIcon className="size-4" /> LinkedIn
             </a>
-            <a
-              href={`mailto:${profile.email}`}
+            <EmailLink
+              email={profile.email}
               className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
             >
               <Mail className="size-4" /> Email
-            </a>
+            </EmailLink>
           </div>
         </FadeIn>
       </Container>

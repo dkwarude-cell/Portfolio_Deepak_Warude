@@ -6,6 +6,7 @@ import { ArrowRight, Download, Mail } from "lucide-react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
 import { Container } from "@/components/container";
+import { EmailLink } from "@/components/email-link";
 import { Button } from "@/components/ui/button";
 import { useCoarsePointer } from "@/hooks/use-coarse-pointer";
 import { profile } from "@/lib/data";
@@ -114,13 +115,13 @@ export function Hero() {
               >
                 <LinkedinIcon className="size-5" />
               </a>
-              <a
-                href={`mailto:${profile.email}`}
-                aria-label="Email"
+              <EmailLink
+                email={profile.email}
+                ariaLabel="Email"
                 className="flex size-9 items-center justify-center text-muted-foreground transition-colors hover:text-primary sm:size-auto"
               >
                 <Mail className="size-5" />
-              </a>
+              </EmailLink>
             </div>
           </motion.div>
 
