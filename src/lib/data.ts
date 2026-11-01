@@ -199,6 +199,10 @@ export const achievements = [
     title: "Finalist — Smart India Hackathon (SIH 2024)",
     period: "Sep 2024 – Dec 2024",
     detail: "Built a cryogenic storage system enhancing efficiency and reliability of medical tube preservation.",
+    images: [
+      "/images/achievements/sih-2024-team-laptop.jpg",
+      "/images/achievements/sih-2024-team-group.jpg",
+    ],
   },
 ];
 
