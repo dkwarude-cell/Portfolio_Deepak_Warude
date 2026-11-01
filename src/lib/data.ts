@@ -45,7 +45,7 @@ export type Project = {
   period: string;
   stack: string[];
   bullets: string[];
-  badge?: string;
+  badges?: string[];
   size?: "lg" | "md";
   github?: string;
   live?: string;
@@ -65,7 +65,7 @@ export const projects: Project[] = [
       "Deployed ESP32-Pico sensors with cloud integration and a scalable microservices backend achieving 97.5% uptime.",
       "Filed a patent for the AI formula logic and predictive analytics module.",
     ],
-    badge: "SIH 2025 Winner",
+    badges: ["SIH 2025 Winner"],
     size: "lg",
     github: "https://github.com/dkwarude-cell/Swasthyam",
   },
@@ -82,7 +82,7 @@ export const projects: Project[] = [
       "Shipped Parade State and Leave Balance exports to Excel and PDF, with secure local authentication.",
       "Actively deployed and in use with the 14 Jat Regiment of the Indian Army.",
     ],
-    badge: "Deployed — Indian Army",
+    badges: ["Deployed — Indian Army", "NDA Signed"],
     size: "lg",
   },
   {
@@ -113,6 +113,7 @@ export const projects: Project[] = [
       "Designed a dual-mode architecture (Pro & Guided) with multi-profile personalization and voice control.",
       "Automated ITT electrode placement guidance and personalized therapy recommendations.",
     ],
+    badges: ["NDA Signed"],
     size: "md",
   },
   {

@@ -26,10 +26,20 @@ export function Projects() {
                   <CardHeader>
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <h3 className="text-lg font-semibold">{project.name}</h3>
-                      {project.badge && (
-                        <Badge className="bg-primary/15 text-primary hover:bg-primary/15">
-                          {project.badge}
-                        </Badge>
+                      {project.badges && project.badges.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5">
+                          {project.badges.map((badge) =>
+                            badge === "NDA Signed" ? (
+                              <Badge key={badge} variant="outline" className="text-muted-foreground">
+                                {badge}
+                              </Badge>
+                            ) : (
+                              <Badge key={badge} className="bg-primary/15 text-primary hover:bg-primary/15">
+                                {badge}
+                              </Badge>
+                            )
+                          )}
+                        </div>
                       )}
                     </div>
                     <p className="font-mono text-xs text-muted-foreground">{project.period}</p>
