@@ -1,5 +1,7 @@
+import { ExternalLink } from "lucide-react";
 import { Container } from "@/components/container";
 import { FadeIn } from "@/components/fade-in";
+import { GithubIcon } from "@/components/icons";
 import { SectionHeading } from "@/components/section-heading";
 import { TiltCard } from "@/components/tilt-card";
 import { Badge } from "@/components/ui/badge";
@@ -51,6 +53,31 @@ export function Projects() {
                         </Badge>
                       ))}
                     </div>
+
+                    {(project.github || project.live) && (
+                      <div className="mt-5 flex flex-wrap gap-4 border-t border-border/60 pt-4 text-sm">
+                        {project.github && (
+                          <a
+                            href={project.github}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center gap-1.5 font-medium text-muted-foreground transition-colors hover:text-primary"
+                          >
+                            <GithubIcon className="size-4" /> Code
+                          </a>
+                        )}
+                        {project.live && (
+                          <a
+                            href={project.live}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center gap-1.5 font-medium text-muted-foreground transition-colors hover:text-primary"
+                          >
+                            <ExternalLink className="size-4" /> Live Demo
+                          </a>
+                        )}
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               </TiltCard>

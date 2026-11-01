@@ -47,6 +47,8 @@ export type Project = {
   bullets: string[];
   badge?: string;
   size?: "lg" | "md";
+  github?: string;
+  live?: string;
 };
 
 export const projects: Project[] = [
@@ -65,6 +67,7 @@ export const projects: Project[] = [
     ],
     badge: "SIH 2025 Winner",
     size: "lg",
+    github: "https://github.com/dkwarude-cell/Swasthyam",
   },
   {
     slug: "rakshak-hrms",
@@ -109,6 +112,24 @@ export const projects: Project[] = [
       "Built a responsive therapy-monitoring SaaS with real-time data synchronization using Firebase and Tailwind CSS.",
     ],
     size: "md",
+    github: "https://github.com/dkwarude-cell/Dashboard-Runverve-SH-Full-Stack",
+    live: "https://dashboard-runverve-sh-full-stack.vercel.app/",
+  },
+  {
+    slug: "durgaraj-adventures",
+    name: "Durgaraj Adventures — Trekking & Adventure Tourism Platform",
+    summary:
+      "Custom WordPress theme and booking platform built for Sahyadri Mitra Foundation, originally prototyped as a React/Vite/TypeScript SPA and converted into a full WordPress theme with custom post types for treks, training programs, and lead capture.",
+    period: "Mar 2026",
+    stack: ["WordPress", "PHP", "React", "Vite", "TypeScript"],
+    bullets: [
+      "Converted a React/Vite/TypeScript SPA into a production WordPress theme for a real client business.",
+      "Built custom post types for Treks, Training Programs, Testimonials, Team Members, and a private Leads CPT for form submissions.",
+      "Implemented trek filtering by difficulty, category, and month, plus a gallery lightbox and FAQ accordion.",
+      "Added AJAX contact and lead-capture forms, a WhatsApp floating button, and SEO-friendly markup.",
+    ],
+    size: "md",
+    github: "https://github.com/dkwarude-cell/Durgaraj-Adventures",
   },
 ];
 
