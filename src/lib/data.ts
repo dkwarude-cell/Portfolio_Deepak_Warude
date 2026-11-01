@@ -190,6 +190,10 @@ export const achievements = [
     period: "Sep 2025 – Dec 2025",
     detail:
       'Built "Swasthyam," a full-stack AI-driven IoT application using React Native with 85% prediction accuracy, among 1000+ competing teams.',
+    images: [
+      "/images/achievements/sih-2025-team.jpg",
+      "/images/achievements/sih-2025-cheque.jpg",
+    ],
   },
   {
     title: "Finalist — Smart India Hackathon (SIH 2024)",
