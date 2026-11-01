@@ -2,7 +2,7 @@ export const profile = {
   name: "Deepak Keshav Warude",
   shortName: "Deepak Warude",
   role: "Computer Engineering Student",
-  tagline: "I build AI-powered software that ships — from hospital wards to Army battalions.",
+  tagline: "Computer Engineer building AI-powered products from idea to deployment.",
   location: "Nashik, India",
   status: "Open to opportunities",
   email: "deepakwarude009@gmail.com",

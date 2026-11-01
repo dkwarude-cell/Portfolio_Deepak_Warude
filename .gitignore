@@ -39,7 +39,11 @@ yarn-error.log*
 # research scratch (not part of the site)
 /research_notes/
 /reports/
+/scratchpad/
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.vercel
+.env*
