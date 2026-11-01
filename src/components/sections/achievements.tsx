@@ -10,7 +10,7 @@ export function Achievements() {
     <section id="achievements" className="py-16 sm:py-20">
       <Container>
         <SectionHeading eyebrow="06" title="Achievements" />
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2">
           {achievements.map((item, i) => (
             <FadeIn key={item.title} delay={i * 0.05}>
               <Card className="h-full border-border/70">

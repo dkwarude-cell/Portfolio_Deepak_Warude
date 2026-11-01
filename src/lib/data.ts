@@ -86,21 +86,6 @@ export const projects: Project[] = [
     size: "lg",
   },
   {
-    slug: "smartheal",
-    name: "SmartHeal — AI-Powered Therapeutic Platform",
-    summary:
-      "Real-time AI health monitoring and therapy platform supporting 500+ users, with personalized dual-mode treatment plans.",
-    period: "Mar 2025 – Dec 2025",
-    stack: ["React Native", "NestJS", "Firebase", "Docker", "Expo"],
-    bullets: [
-      "Developed a real-time AI health monitoring system supporting 500+ users with Firebase and NestJS APIs.",
-      "Reduced code redundancy by 35% via modular architecture and reusable components.",
-      "Designed a dual-mode architecture (Pro & Guided) with multi-profile personalization and voice control.",
-      "Automated ITT electrode placement guidance and personalized therapy recommendations.",
-    ],
-    size: "md",
-  },
-  {
     slug: "client-dashboard",
     name: "Client Management Dashboard",
     summary:
@@ -114,6 +99,21 @@ export const projects: Project[] = [
     size: "md",
     github: "https://github.com/dkwarude-cell/Dashboard-Runverve-SH-Full-Stack",
     live: "https://dashboard-runverve-sh-full-stack.vercel.app/",
+  },
+  {
+    slug: "smartheal",
+    name: "SmartHeal — AI-Powered Therapeutic Platform",
+    summary:
+      "Real-time AI health monitoring and therapy platform supporting 500+ users, with personalized dual-mode treatment plans.",
+    period: "Mar 2025 – Dec 2025",
+    stack: ["React Native", "NestJS", "Firebase", "Docker", "Expo"],
+    bullets: [
+      "Developed a real-time AI health monitoring system supporting 500+ users with Firebase and NestJS APIs.",
+      "Reduced code redundancy by 35% via modular architecture and reusable components.",
+      "Designed a dual-mode architecture (Pro & Guided) with multi-profile personalization and voice control.",
+      "Automated ITT electrode placement guidance and personalized therapy recommendations.",
+    ],
+    size: "md",
   },
   {
     slug: "durgaraj-adventures",
@@ -194,11 +194,6 @@ export const achievements = [
     title: "Finalist — Smart India Hackathon (SIH 2024)",
     period: "Sep 2024 – Dec 2024",
     detail: "Built a cryogenic storage system enhancing efficiency and reliability of medical tube preservation.",
-  },
-  {
-    title: "Filed Copyright",
-    period: "Jan 2026 – Apr 2026",
-    detail: "Developed a generalized oil formulation model using research papers and mathematics.",
   },
 ];
 
