@@ -3,7 +3,13 @@
 import * as React from "react";
 import Link from "next/link";
 import { Download, Menu, X } from "lucide-react";
-import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useMotionTemplate,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { cn } from "@/lib/utils";
 import { nav, profile } from "@/lib/data";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -38,6 +44,13 @@ export function SiteHeader() {
     return () => observer.disconnect();
   }, []);
 
+  React.useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
     <motion.header
       style={{ borderBottomColor: borderColor }}
@@ -47,7 +60,7 @@ export function SiteHeader() {
         style={{ height: headerHeight }}
         className="mx-auto flex w-full max-w-5xl items-center justify-between px-6"
       >
-        <Link href="#top" className="font-mono text-sm font-medium">
+        <Link href="#top" className="font-mono text-sm font-medium" onClick={() => setOpen(false)}>
           DW<span className="text-primary">.</span>
         </Link>
 
@@ -85,7 +98,9 @@ export function SiteHeader() {
           <Button
             variant="ghost"
             size="icon"
+            className="size-11"
             aria-label="Toggle menu"
+            aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
@@ -93,28 +108,41 @@ export function SiteHeader() {
         </div>
       </motion.div>
 
-      {open && (
-        <nav className="flex flex-col gap-1 border-t border-border/60 px-6 py-4 md:hidden">
-          {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              className="py-2 text-sm text-muted-foreground hover:text-foreground"
-            >
-              {item.label}
-            </Link>
-          ))}
-          <a
-            href={profile.resumeUrl}
-            download
-            className="mt-2 flex items-center gap-2 text-sm font-medium text-primary"
+      <AnimatePresence>
+        {open && (
+          <motion.nav
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden border-t border-border/60 md:hidden"
           >
-            <Download className="size-4" />
-            Download Resume
-          </a>
-        </nav>
-      )}
+            <div className="flex flex-col gap-1 px-6 py-3">
+              {nav.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className={cn(
+                    "flex min-h-11 items-center text-base text-muted-foreground transition-colors active:text-primary",
+                    activeHash === item.href && "font-medium text-foreground"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <a
+                href={profile.resumeUrl}
+                download
+                className="mt-2 flex min-h-11 items-center gap-2 text-base font-medium text-primary"
+              >
+                <Download className="size-4" />
+                Download Resume
+              </a>
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 }

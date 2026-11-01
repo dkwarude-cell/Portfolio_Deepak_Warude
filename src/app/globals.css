@@ -120,12 +120,21 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    -webkit-tap-highlight-color: transparent;
+  }
+  html,
+  body {
+    overflow-x: hidden;
   }
   body {
     @apply bg-background text-foreground;
   }
   html {
     @apply font-sans;
+  }
+  a,
+  button {
+    touch-action: manipulation;
   }
   section[id] {
     scroll-margin-top: 5rem;

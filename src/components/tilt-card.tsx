@@ -9,6 +9,7 @@ import {
   useTransform,
 } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useCoarsePointer } from "@/hooks/use-coarse-pointer";
 
 export function TiltCard({
   children,
@@ -17,6 +18,7 @@ export function TiltCard({
   children: React.ReactNode;
   className?: string;
 }) {
+  const isCoarse = useCoarsePointer();
   const ref = React.useRef<HTMLDivElement>(null);
   const px = useMotionValue(0.5);
   const py = useMotionValue(0.5);
@@ -38,6 +40,10 @@ export function TiltCard({
   function onMouseLeave() {
     px.set(0.5);
     py.set(0.5);
+  }
+
+  if (isCoarse) {
+    return <div className={cn("relative", className)}>{children}</div>;
   }
 
   return (
